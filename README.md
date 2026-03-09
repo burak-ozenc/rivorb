@@ -1,6 +1,6 @@
-﻿# Rivorb
+﻿# Rivörb
 
-A VST3 reverb plugin with spectral-adaptive processing. Instead of manually EQ-ing your reverb to fit the source, Rivorb analyzes the incoming signal and shapes the reverb tail automatically.
+A VST3 reverb plugin with spectral-adaptive processing. Instead of manually EQ-ing your reverb to fit the source, Rivörb analyzes the incoming signal and shapes the reverb tail automatically.
 
 Built with JUCE / C++.
 
@@ -77,8 +77,8 @@ Output
 **Steps**
 
 ```bash
-git clone https://github.com/yourname/rivorb
-cd rivorb
+git clone https://github.com/yourname/Rivörb
+cd Rivörb
 ```
 
 Open `CMakeLists.txt` in CLion. Update the JUCE path if needed:
@@ -89,7 +89,7 @@ add_subdirectory(C:/JUCE JUCE)
 
 Build → the `.vst3` file will be at:
 ```
-cmake-build-debug/Rivorb_artefacts/Debug/VST3/Rivorb.vst3
+cmake-build-debug/Rivörb_artefacts/Debug/VST3/Rivörb.vst3
 ```
 
 Point your DAW's plugin scanner at that folder.
@@ -100,7 +100,7 @@ Point your DAW's plugin scanner at that folder.
 
 The spectral analysis algorithm was prototyped in Python first (librosa, scipy, pedalboard) before being ported to C++. The Python prototype is available as a Gradio app on Hugging Face Spaces for offline validation.
 
-[Here](https://huggingface.co/spaces/burak-ozenc/rivorb-test) is the link for this app on HF Spaces.
+[Here](https://huggingface.co/spaces/burak-ozenc/Rivörb-test) is the link for this app on HF Spaces.
 
 ---
 
