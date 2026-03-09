@@ -59,7 +59,7 @@ jobs:
           name: Rivorb-${{ matrix.name }}-VST3
           path: build/Rivorb_artefacts/Release/VST3/
 
-  # ── Create GitHub Release and attach all artifacts ────────────────────
+  # ── Create GitHub Release and attach all artifacts ───────────────────
   release:
     needs: build
     runs-on: ubuntu-latest
