@@ -29,10 +29,10 @@ jobs:
       - name: Checkout JUCE
         uses: actions/checkout@v4
         with:
-            repository: juce-framework/JUCE
-            ref: refs/tags/8.0.4
-            path: JUCE
-            fetch-depth: 1
+          repository: juce-framework/JUCE
+          ref: refs/tags/8.0.4
+          path: JUCE
+          fetch-depth: 1
 
       - name: Install Ninja
         uses: seanmiddleditch/gha-setup-ninja@master
@@ -56,32 +56,31 @@ jobs:
       - name: Build
         run: cmake --build build --config Release -- -j4
 
-      - name: Debug build output
+      - name: Zip VST3 (Windows)
         if: runner.os == 'Windows'
         run: |
-          Get-ChildItem -Recurse "build\Rivorb_artefacts" | Select-Object FullName
+          Compress-Archive -Path "build\Rivorb_artefacts\Release\VST3\Rivorb.vst3" `
+            -DestinationPath "Rivorb-Windows-VST3.zip"
 
-      - name: Build installer (Windows)
-        if: runner.os == 'Windows'
-        run: |
-          New-Item -ItemType Directory -Force -Path "installer\output"
-          iscc /Qp "installer/rivorb_installer.iss" `
-            /DMyBuildDir="${{ github.workspace }}\build\Rivorb_artefacts\Release\VST3" `
-            /DMyOutputDir="${{ github.workspace }}\installer\output"
-
-      - name: Upload Windows installer
+      - name: Upload Windows VST3
         if: runner.os == 'Windows'
         uses: actions/upload-artifact@v4
         with:
-          name: Rivorb-Windows-Installer
-          path: installer/output/*.exe
+          name: Rivorb-Windows-VST3
+          path: Rivorb-Windows-VST3.zip
+
+      - name: Zip VST3 (Mac & Linux)
+        if: runner.os != 'Windows'
+        run: |
+          cd build/Rivorb_artefacts/VST3
+          zip -r Rivorb-${{ matrix.name }}-VST3.zip Rivorb.vst3
 
       - name: Upload VST3 (Mac & Linux)
         if: runner.os != 'Windows'
         uses: actions/upload-artifact@v4
         with:
           name: Rivorb-${{ matrix.name }}-VST3
-          path: build/Rivorb_artefacts/VST3/
+          path: build/Rivorb_artefacts/VST3/Rivorb-${{ matrix.name }}-VST3.zip
 
   release:
     needs: build
