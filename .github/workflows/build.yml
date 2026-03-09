@@ -18,6 +18,7 @@ jobs:
             name: Linux
 
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
 
     steps:
       - name: Checkout repo
@@ -25,25 +26,26 @@ jobs:
         with:
           submodules: true   # pulls in JUCE submodule
 
+      - name: Install Ninja
+        uses: seanmiddleditch/gha-setup-ninja@master
+
       - name: Install Linux dependencies
         if: runner.os == 'Linux'
         run: |
           sudo apt-get update
           sudo apt-get install -y libasound2-dev libx11-dev libxrandr-dev \
-            libxinerama-dev libxcursor-dev libfreetype6-dev
+            libxinerama-dev libxcursor-dev libfreetype6-dev \
+            libfontconfig1-dev libwebkit2gtk-4.0-dev
 
       - name: Configure CMake
-        run: cmake -B build -S . -DCMAKE_BUILD_TYPE=Release
+        run: cmake -B build -S . -DCMAKE_BUILD_TYPE=Release -G Ninja
 
       - name: Build
-        run: cmake --build build --config Release
+        run: cmake --build build --config Release --parallel
 
-      # ── Windows only: build Inno Setup installer ──────────────────────
       - name: Build installer (Windows)
         if: runner.os == 'Windows'
-        run: |
-          iscc "installer/rivorb_installer.iss"
-        # iscc.exe is pre-installed on GitHub's windows-latest runner
+        run: iscc "installer/rivorb_installer.iss"
 
       - name: Upload Windows installer
         if: runner.os == 'Windows'
