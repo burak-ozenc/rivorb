@@ -1,0 +1,63 @@
+﻿# ─────────────────────────────────────────────
+# CLion / JetBrains
+# ─────────────────────────────────────────────
+.idea/
+*.iml
+
+# ─────────────────────────────────────────────
+# CMake build directories
+# ─────────────────────────────────────────────
+cmake-build-debug/
+cmake-build-release/
+cmake-build-*/
+build/
+out/
+
+# ─────────────────────────────────────────────
+# JUCE — do NOT commit the JUCE source tree
+# (you have it at C:/JUCE, referenced by path)
+# ─────────────────────────────────────────────
+JUCE/
+
+# JUCE auto-generated header (produced at build time)
+JuceLibraryCode/
+
+# ─────────────────────────────────────────────
+# Compiled artefacts
+# ─────────────────────────────────────────────
+*.vst3
+*.dll
+*.exp
+*.lib
+*.pdb
+*.ilk
+*.exe
+
+# ─────────────────────────────────────────────
+# Installer output
+# ─────────────────────────────────────────────
+installer/output/
+
+# ─────────────────────────────────────────────
+# Windows
+# ─────────────────────────────────────────────
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# ─────────────────────────────────────────────
+# Visual Studio / MSVC
+# ─────────────────────────────────────────────
+.vs/
+*.user
+*.suo
+*.VC.db
+*.VC.opendb
+
+# ─────────────────────────────────────────────
+# Miscellaneous
+# ─────────────────────────────────────────────
+*.log
+*.tmp
+*.bak
