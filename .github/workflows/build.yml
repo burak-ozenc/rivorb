@@ -76,7 +76,7 @@ jobs:
       - name: Zip VST3 (Mac & Linux)
         if: runner.os != 'Windows'
         run: |
-          cd build/Rivorb_artefacts/VST3
+          cd build/Rivorb_artefacts/Release/VST3
           zip -r Rivorb-${{ matrix.name }}-VST3.zip Rivorb.vst3
 
       - name: Upload VST3 (Mac & Linux)
@@ -84,7 +84,19 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Rivorb-${{ matrix.name }}-VST3
-          path: build/Rivorb_artefacts/VST3/Rivorb-${{ matrix.name }}-VST3.zip
+          path: build/Rivorb_artefacts/Release/VST3/Rivorb-${{ matrix.name }}-VST3.zip
+      - name: Zip VST3 (Mac & Linux)
+        if: runner.os != 'Windows'
+        run: |
+          cd build/Rivorb_artefacts/Release/VST3
+          zip -r Rivorb-${{ matrix.name }}-VST3.zip Rivorb.vst3
+
+      - name: Upload VST3 (Mac & Linux)
+        if: runner.os != 'Windows'
+        uses: actions/upload-artifact@v4
+        with:
+          name: Rivorb-${{ matrix.name }}-VST3
+          path: build/Rivorb_artefacts/Release/VST3/Rivorb-${{ matrix.name }}-VST3.zip
 
   release:
     needs: build
