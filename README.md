@@ -69,7 +69,7 @@ Output
 ## Building
 
 **Requirements**
-- JUCE 7+
+- JUCE 8+
 - CMake 3.22+
 - MSVC (Visual Studio 2022 build tools) or Clang
 - CLion or Visual Studio

@@ -69,6 +69,10 @@ jobs:
           name: Rivorb-Windows-VST3
           path: Rivorb-Windows-VST3.zip
 
+      - name: Debug build output (Mac & Linux)
+        if: runner.os != 'Windows'
+        run: find build/Rivorb_artefacts -type f | head -30
+
       - name: Zip VST3 (Mac & Linux)
         if: runner.os != 'Windows'
         run: |
