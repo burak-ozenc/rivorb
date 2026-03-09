@@ -3,7 +3,7 @@ project(Rivorb VERSION 0.1.0)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_subdirectory(C:/JUCE JUCE)
+add_subdirectory(JUCE)
 
 juce_add_plugin(Rivorb
         # Identity
@@ -18,7 +18,7 @@ juce_add_plugin(Rivorb
         DESCRIPTION             "Spectral Adaptive Reverb"
         VERSION                 "1.0.0"
 
-        FORMATS                 VST3
+        FORMATS                 VST3 AU
         PRODUCT_NAME            "Rivorb"
         IS_SYNTH                FALSE
         NEEDS_MIDI_INPUT        FALSE

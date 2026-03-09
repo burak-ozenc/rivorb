@@ -1,0 +1,77 @@
+﻿name: Build & Release Rivorb
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          - os: windows-latest
+            name: Windows
+          - os: macos-latest
+            name: macOS
+          - os: ubuntu-latest
+            name: Linux
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          submodules: true   # pulls in JUCE submodule
+
+      - name: Install Linux dependencies
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libasound2-dev libx11-dev libxrandr-dev \
+            libxinerama-dev libxcursor-dev libfreetype6-dev
+
+      - name: Configure CMake
+        run: cmake -B build -S . -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        run: cmake --build build --config Release
+
+      # ── Windows only: build Inno Setup installer ──────────────────────
+      - name: Build installer (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          iscc "installer/rivorb_installer.iss"
+        # iscc.exe is pre-installed on GitHub's windows-latest runner
+
+      - name: Upload Windows installer
+        if: runner.os == 'Windows'
+        uses: actions/upload-artifact@v4
+        with:
+          name: Rivorb-Windows-Installer
+          path: installer/output/*.exe
+
+      - name: Upload VST3 (Mac & Linux)
+        if: runner.os != 'Windows'
+        uses: actions/upload-artifact@v4
+        with:
+          name: Rivorb-${{ matrix.name }}-VST3
+          path: build/Rivorb_artefacts/Release/VST3/
+
+  # ── Create GitHub Release and attach all artifacts ────────────────────
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts/
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: artifacts/**/*
+          generate_release_notes: true

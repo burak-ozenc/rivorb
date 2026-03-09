@@ -17,7 +17,7 @@ out/
 # JUCE — do NOT commit the JUCE source tree
 # (you have it at C:/JUCE, referenced by path)
 # ─────────────────────────────────────────────
-JUCE/
+#JUCE/
 
 # JUCE auto-generated header (produced at build time)
 JuceLibraryCode/
