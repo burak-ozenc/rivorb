@@ -56,6 +56,11 @@ jobs:
       - name: Build
         run: cmake --build build --config Release -- -j4
 
+      - name: Debug build output
+        if: runner.os == 'Windows'
+        run: |
+          Get-ChildItem -Recurse "build\Rivorb_artefacts" | Select-Object FullName
+
       - name: Build installer (Windows)
         if: runner.os == 'Windows'
         run: |
