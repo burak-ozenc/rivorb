@@ -29,10 +29,10 @@ jobs:
       - name: Checkout JUCE
         uses: actions/checkout@v4
         with:
-          repository: juce-framework/JUCE
-          ref: 8.0.4
-          path: JUCE
-          fetch-depth: 1
+            repository: juce-framework/JUCE
+            ref: refs/tags/8.0.4
+            path: JUCE
+            fetch-depth: 1
 
       - name: Install Ninja
         uses: seanmiddleditch/gha-setup-ninja@master
