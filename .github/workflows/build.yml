@@ -18,13 +18,21 @@ jobs:
             name: Linux
 
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 60
+    timeout-minutes: 90
 
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          submodules: false   # pulls in JUCE submodule
+          submodules: false
+
+      - name: Checkout JUCE
+        uses: actions/checkout@v4
+        with:
+          repository: juce-framework/JUCE
+          ref: 7.0.9
+          path: JUCE
+          fetch-depth: 1
 
       - name: Install Ninja
         uses: seanmiddleditch/gha-setup-ninja@master
@@ -33,9 +41,10 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           sudo apt-get update
-          sudo apt-get install -y libasound2-dev libx11-dev libxrandr-dev \
+          sudo apt-get install -y --no-install-recommends \
+            libasound2-dev libx11-dev libxrandr-dev \
             libxinerama-dev libxcursor-dev libfreetype6-dev \
-            libfontconfig1-dev libwebkit2gtk-4.1-dev
+            libfontconfig1-dev
 
       - name: Configure CMake
         run: cmake -B build -S . -DCMAKE_BUILD_TYPE=Release -G Ninja
@@ -61,8 +70,6 @@ jobs:
           name: Rivorb-${{ matrix.name }}-VST3
           path: build/Rivorb_artefacts/Release/VST3/
 
-
-  # ── Create GitHub Release and attach all artifacts ───────────────────
   release:
     needs: build
     runs-on: ubuntu-latest
