@@ -3,6 +3,20 @@
 #include "PluginProcessor.h"
 
 // ─────────────────────────────────────────────
+// Font helper (JUCE 8)
+// ─────────────────────────────────────────────
+
+static inline juce::Font monoFont (float height, bool bold = false)
+{
+    auto opts = juce::FontOptions()
+                    .withName (juce::Font::getDefaultMonospacedFontName())
+                    .withHeight (height);
+    if (bold)
+        opts = opts.withStyle ("Bold");
+    return juce::Font (opts);
+}
+
+// ─────────────────────────────────────────────
 // Custom LookAndFeel
 // ─────────────────────────────────────────────
 
@@ -72,7 +86,7 @@ public:
 
     juce::Font getLabelFont (juce::Label&) override
     {
-        return juce::Font (juce::Font::getDefaultMonospacedFontName(), 9.5f, juce::Font::plain);
+        return monoFont (9.5f);
     }
 };
 

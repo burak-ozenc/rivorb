@@ -59,7 +59,8 @@ jobs:
 
       - name: Build installer (Windows)
         if: runner.os == 'Windows'
-        run: iscc "installer/rivorb_installer.iss"
+        run:  iscc "installer/rivorb_installer.iss" `
+            /DMyBuildDir="${{ github.workspace }}\build\Rivorb_artefacts\Release\VST3"
 
       - name: Upload Windows installer
         if: runner.os == 'Windows'
